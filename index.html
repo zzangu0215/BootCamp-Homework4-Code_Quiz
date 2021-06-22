@@ -4,7 +4,7 @@
         <title>WELCOME TO JUN'S CODE QUIZ CHALLENGE</title>
         <meta charset="UTF-8">
         <meta name="viewpoint" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="styel.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <header>
@@ -24,15 +24,18 @@
             </section>
 
             <section class="quiz-in-progress">
-                <div>TIME LEFT: <span class="timer">80</span></div>
+                <div>TIME LEFT: <span class="timer">100</span></div>
                 <div class="questions">Question PlaceHolder</div>
                 <div class="answer-options">
-                    <button id="optionA">A</button>
-                    <button id="optionB">B</button>
-                    <button id="optionC">C</button>
-                    <button id="optionD">D</button>
+                    <button id="optionA" onclick="checkAnswer('A')">A</button>
+                    <button id="optionB" onclick="checkAnswer('B')">B</button>
+                    <button id="optionC" onclick="checkAnswer('C')">C</button>
+                    <button id="optionD" onclick="checkAnswer('D')">D</button>
                 </div>
-                <div class="answer-check">Answer PlaceHolder</div>
+                <div class="answer-check"></div>
+                <div class="goback-moveon">
+                    <button id="moveOn">Move On</button>
+                </div>
             </section>
             
             <section class="quiz-over">
@@ -44,12 +47,14 @@
             </section>
 
             <section class="high-score-page">
-                <div class="show-scores">
-                    <h2>User Initials</h3>
-                    <h2>Score</h3>
+                <div>
+                    <h2>User Initials</h2>
+                    <h2>Score</h2>
                 </div>
-                <h3 class="score-initial"></h3>
-                <h3 class="score-score"></h3>
+                <div class="show-scores">
+                    <h3 class="score-initial"></h3>
+                    <h3 class="score-score"></h3>
+                </div>
                 <div class="end-option">
                     <button id="play-again">PLAY AGAIN</button>
                     <button id="clear-scores">CLEAR SCORES</button>

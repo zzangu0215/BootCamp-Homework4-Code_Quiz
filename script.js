@@ -7,6 +7,8 @@ var optionButton_B = document.getElementById("optionB");
 var optionButton_C = document.getElementById("optionC");
 var optionButton_D = document.getElementById("optionD");
 
+var moveOnButton = document.getElementById("moveOn");
+
 var submitInitialBtn = document.getElementById("submit-initial");
 
 var playAgainBtn = document.getElementById("play-again");
@@ -29,98 +31,107 @@ var quizOverEl = document.querySelector(".quiz-over");
 var finalScoreEl = document.querySelector(".final-score");
 var highScorePageEl = document.querySelector(".high-score-page");
 var showScoreEl = document.querySelector(".show-scores");
+var scoreInitialEl = document.querySelector(".score-initial");
+var scoreScoreEl = document.querySelector(".score-score");
 
 // Declare and Initialize variables
-var timerCount = 80;
+var timerCount = 100;
 var questionIndex = 0;
 var score = 0;
+var isChecked = false;
+var timerInterval;
 
 // Array of Quiz Question Object
 var questionObject = [
     {
-        question: "Inside which HTML element do we put the JavaScript?",
+        question: "1. Inside which HTML element do we put the JavaScript?",
         optionA: "A: <script>",
         optionB: "B: <js>",
         optionC: "C: <javascript>",
         optionD: "D: <scripting>",
-        answer: "A: <script>",
+        answer: "A",
     }, 
     {
-        question: "Which event occurs when the user clicks on an HTML element?",
+        question: "2. Which event occurs when the user clicks on an HTML element?",
         optionA: "A: onmouseover",
         optionB: "B: onchange",
         optionC: "C: onmouseclick",
         optionD: "D: onclick",
-        answer: "D: onclick",
+        answer: "D",
     }, 
     {
-        question: "What does DOM stand for?",
+        question: "3. What does DOM stand for?",
         optionA: "A: Data Object Muted",
         optionB: "B: Data Oriented Model",
         optionC: "C: Document Object Model",
         optionD: "D: Domestic Object Model",
-        answer: "C: Document Object Model",
+        answer: "C",
     }, 
     {
-        question: "What HTML attribute references an external file from HTML?",
+        question: "4. What HTML attribute references an external file from HTML?",
         optionA: "A: src",
         optionB: "B: section",
         optionC: "C: h3",
         optionD: "D: href",
-        answer: "A: src",
+        answer: "A",
     }, 
     {
-        question: "If you want to store the data to your browser locally, what method should you use?",
+        question: "5. If you want to store the data to your browser locally, what method should you use?",
         optionA: "A: globalStorage.setItem()",
         optionB: "B: globalStorage.getItem()",
         optionC: "C: localStorage.getItem()",
-        opcionD: "D: localStorage.setItem()",
-        answer: "D: localStorage.setItem()",
+        optionD: "D: localStorage.setItem()",
+        answer: "D",
     }, 
     {
-        question: "If you want to use the data that you stored locally, what method should you use?",
+        question: "6. If you want to use the data that you stored locally, what method should you use?",
         optionA: "A: globalStorage.setItem()",
         optionB: "B: globalStorage.getItem()",
         optionC: "C: localStorage.getItem()",
-        opcionD: "D: localStorage.setItem()",
-        answer: "C: localStorage.getItem()",
+        optionD: "D: localStorage.setItem()",
+        answer: "C",
     }, 
     {
-        question: "To prevent bubbling on your website, what method would you use on your attribute A?",
+        question: "7. To prevent bubbling on your website, what method would you use on your attribute A?",
         optionA: "A: A.noBubbling()",
         optionB: "B: A.preventBubble()",
         optionC: "C: A.preventDefault()",
         optionD: "D: None of above",
-        answer: "C: A.preventDefault()",
+        answer: "C",
     }, 
     {
-        question: "You want to have an action if you click a button (id=submitButton). What JavaScript method would you use?",
+        question: "8. You want to have an action if you click a button (id=submitButton). What JavaScript method would you use?",
         optionA: "A: setAttribute()",
         optionB: "B: addEventListener()",
         optionC: "C: getAttribute()",
         optionD: "D: querySelector()",
-        answer: "B: addEventListener()",
+        answer: "B",
     }, 
     {
-        question: "What would you primarily use if you want to style your HTML?",
+        question: "9. What would you primarily use if you want to style your HTML?",
         optionA: "A: CSS",
         optionB: "B: node.js",
         optionC: "C: HTML",
         optionD: "D: Java",
-        answer: "A: CSS",
+        answer: "A",
     }, 
     {
-        question: "When you are stuck on studying, what would you do?",
+        question: "10. When you are stuck on studying, what would you do?",
         optionA: "A: Read Documents",
         optionB: "B: Come to Office Hour",
         optionC: "C: Ask to BCS!",
         optionD: "D: All of the above",
-        answer: "D: All of the above",
+        answer: "D",
     }
 ];
 
+quizInProgressEl.style.display = "none";
+quizOverEl.style.display = "none";
+highScorePageEl.style.display = "none";
+
 // functions declaration
 function quizStart() {
+    quizInProgressEl.style.display = "block";
     mainPageEl.style.display = "none";
     highScorePageEl.style.display = "none";
     displayQuestions();
@@ -131,6 +142,18 @@ function displayQuestions() {
     quizOverEl.style.display = "none";
 
     var currQuestion = questionObject[questionIndex];
+
+    if (questionIndex === questionObject.length) {
+        moveOnButton.textContent = "SUBMIT";
+        playAgainBtn.textContent = "PLAY AGAIN";
+        var wantSubmit = confirm("Press OK to submit the quiz");
+        if (wantSubmit) {
+            return showScore();
+        } else {
+            questionIndex--;
+            return ;
+        }
+    }
     questionsEl.textContent = currQuestion.question;
     optionButton_A.textContent = currQuestion.optionA;
     optionButton_B.textContent = currQuestion.optionB;
@@ -139,36 +162,163 @@ function displayQuestions() {
 }
 
 function handleInterval() {
-    var timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
         timerCount--;
         timerEl.textContent = timerCount;
 
-        if(timerCount === 0) {
+        if(timerCount < 0 && questionIndex !== questionObject.length) {
             clearInterval(timerInterval);
+            alert("You ran out of TIME!");
             showScore();
         }
     }, 1000);
 }
 
-function checkAnswer_A(currQuestion) {
-    var correctAnswer = currQuestion.answer;
+function checkAnswer(userPick) {
+    isChecked = true;
+    var correctAnswer = questionObject[questionIndex].answer;
 
-    if (correctAnswer === optionButton_A.textContent) {
+    if (correctAnswer === userPick) {
         score++;
-        questionIndex++;
         answerCheckEl.textContent = "Correct!";
-        displayQuestions();
     }
     else {
-        questionIndex++;
-        answerCheckEl.textContent = "Wrong!\n".concat(correctAnswer);
-        displayQuestions();
+        timerCount = timerCount - 10;
+        answerCheckEl.textContent = "Wrong!\nThe correct answer is: ".concat(correctAnswer);
     }
+
+    if (isChecked) {
+        optionButton_A.disabled = true;
+        optionButton_B.disabled = true;
+        optionButton_C.disabled = true;
+        optionButton_D.disabled = true;
+    }
+}
+
+function goBack() {
+    isChecked = true;
+
+    optionButton_A.disabled = true;
+    optionButton_B.disabled = true;
+    optionButton_C.disabled = true;
+    optionButton_D.disabled = true;
+
+    questionIndex--;
+    displayQuestions();
+    answerCheckEl.textContent = "";
+    console.log(questionIndex);
+    moveOnButton.textContent = "Move On";
+}
+
+function moveOn() {
+    if (isChecked === false) {
+        alert("You have not answered this question!\nYou can't comeback to answer this question.");
+        return;
+    } else {
+        optionButton_A.disabled = false;
+        optionButton_B.disabled = false;
+        optionButton_C.disabled = false;
+        optionButton_D.disabled = false;
+    }
+    isChecked = false;
+
+    questionIndex++;
+    displayQuestions();
+    answerCheckEl.textContent = "";
+
+    if (questionIndex === questionObject.length-1) {
+        moveOnButton.textContent = "Submit";
+    }
+}
+
+function showScore() {
+    clearInterval(timerInterval);
+    quizInProgressEl.style.display = "none";
+    quizOverEl.style.display = "block";
+
+    finalScoreEl.textContent = score;
+}
+
+function submitInitial() {
+
+    quizInProgressEl.style.display = "none";
+    quizOverEl.style.display = "none";
+    highScorePageEl.style.display = "block";
+
+    var user = initialInput.value.trim();
+    var currentUserScores = {
+        name: user.toUpperCase(),
+        score: score,
+    };
+    var stackedUserScores = [];
+    stackedUserScores = JSON.parse(localStorage.getItem("savedScores")) || [];
+    console.log(stackedUserScores);
+
+    if (user === "") {
+        alert("Type your INITIAL correctly!");
+        return;
+    } else {
+        stackedUserScores.push(currentUserScores);
+        localStorage.setItem("savedScores", JSON.stringify(stackedUserScores));
+        displayUserAndScores();
+    }
+}
+
+function displayUserAndScores() {
+    scoreInitialEl.textContent = "";
+    scoreScoreEl.textContent = "";
+    var stackedUserScores = JSON.parse(localStorage.getItem("savedScores")) || [];
+    var numOfUsers = stackedUserScores.length;
+
+    for(var i=0; i<numOfUsers; i++) {
+        var nameStack = document.createElement("li");
+        var scoreStack = document.createElement("li");
+
+        nameStack.textContent = stackedUserScores[i].name;
+        scoreStack.textContent = stackedUserScores[i].score;
+        scoreInitialEl.appendChild(nameStack);
+        scoreScoreEl.appendChild(scoreStack);
+    }
+}
+
+function gotoHighScorePage() {
+    mainPageEl.style.display = "none";
+    quizInProgressEl.style.display = "none";
+    quizOverEl.style.display = "none";
+    highScorePageEl.style.display = "block";
+
+    playAgainBtn.textContent = "BACK TO PLAY";
+
+    displayUserAndScores();
+}
+
+function playAgain() {
+    mainPageEl.style.display = "block";
+    quizInProgressEl.style.display = "none";
+    quizOverEl.style.display = "none";
+    highScorePageEl.style.display = "none";
+
+    timerCount = 100;
+    score = 0;
+    questionIndex = 0;
+
+    moveOnButton.textContent = "Move On";
+    optionButton_A.disabled = false;
+    optionButton_B.disabled = false;
+    optionButton_C.disabled = false;
+    optionButton_D.disabled = false;
+}
+
+function clearScore() {
+    window.localStorage.clear();
+    scoreInitialEl.textContent = "";
+    scoreScoreEl.textContent = "";
 }
 
 // addEventListeners
 startButton.addEventListener("click", quizStart);
-optionButton_A.addEventListener("click", checkAnswer_A);
-//optionButton_B.addEventListener("click", checkAnswer_B);
-//optionButton_C.addEventListener("click", checkAnswer_C);
-//optionButton_D.addEventListener("click", checkAnswer_D);
+moveOnButton.addEventListener("click", moveOn);
+submitInitialBtn.addEventListener("click", submitInitial);
+highScoreButton.addEventListener("click", gotoHighScorePage);
+playAgainBtn.addEventListener("click", playAgain);
+clearScoresBtn.addEventListener("click", clearScore);

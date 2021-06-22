@@ -1,0 +1,28 @@
+
+
+#optionA, #optionB, #optionC, #optionD  {
+    display: inline-block;
+    padding: 20px;
+    width: 200px;
+    height: 100px;
+    margin-top: 3px;
+    text-align: center;
+    font-family: sans-serif;
+    background-color: #5ef1ea;
+    border-radius: 10px;
+    border: 3px double #cccccc;
+    color: #131111;
+    font-size: 15px;
+}
+
+footer {
+    padding: 30px;
+    clear: both;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+      'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+  
+footer h2 {
+    font-size: 20px;
+}
