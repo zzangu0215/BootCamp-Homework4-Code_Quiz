@@ -38,7 +38,7 @@ var scoreScoreEl = document.querySelector(".score-score");
 var timerCount = 100;
 var questionIndex = 0;
 var score = 0;
-var isChecked = false;
+//var isChecked = false;
 var timerInterval;
 
 // Array of Quiz Question Object
@@ -134,6 +134,8 @@ function quizStart() {
     quizInProgressEl.style.display = "block";
     mainPageEl.style.display = "none";
     highScorePageEl.style.display = "none";
+    timerEl.textContent = 100;
+    answerCheckEl.textContent = '';
     displayQuestions();
     handleInterval();
 }
@@ -144,15 +146,7 @@ function displayQuestions() {
     var currQuestion = questionObject[questionIndex];
 
     if (questionIndex === questionObject.length) {
-        moveOnButton.textContent = "SUBMIT";
-        playAgainBtn.textContent = "PLAY AGAIN";
-        var wantSubmit = confirm("Press OK to submit the quiz");
-        if (wantSubmit) {
-            return showScore();
-        } else {
-            questionIndex--;
-            return ;
-        }
+        return showScore();
     }
     questionsEl.textContent = currQuestion.question;
     optionButton_A.textContent = currQuestion.optionA;
@@ -175,7 +169,7 @@ function handleInterval() {
 }
 
 function checkAnswer(userPick) {
-    isChecked = true;
+    //isChecked = true;
     var correctAnswer = questionObject[questionIndex].answer;
 
     if (correctAnswer === userPick) {
@@ -187,48 +181,12 @@ function checkAnswer(userPick) {
         answerCheckEl.textContent = "Wrong!\nThe correct answer is: ".concat(correctAnswer);
     }
 
-    if (isChecked) {
-        optionButton_A.disabled = true;
-        optionButton_B.disabled = true;
-        optionButton_C.disabled = true;
-        optionButton_D.disabled = true;
-    }
-}
-
-function goBack() {
-    isChecked = true;
-
-    optionButton_A.disabled = true;
-    optionButton_B.disabled = true;
-    optionButton_C.disabled = true;
-    optionButton_D.disabled = true;
-
-    questionIndex--;
-    displayQuestions();
-    answerCheckEl.textContent = "";
-    console.log(questionIndex);
-    moveOnButton.textContent = "Move On";
-}
-
-function moveOn() {
-    if (isChecked === false) {
-        alert("You have not answered this question!\nYou can't comeback to answer this question.");
-        return;
-    } else {
-        optionButton_A.disabled = false;
-        optionButton_B.disabled = false;
-        optionButton_C.disabled = false;
-        optionButton_D.disabled = false;
-    }
-    isChecked = false;
-
     questionIndex++;
     displayQuestions();
-    answerCheckEl.textContent = "";
-
-    if (questionIndex === questionObject.length-1) {
-        moveOnButton.textContent = "Submit";
-    }
+    
+    setTimeout(function() {
+        answerCheckEl.textContent = "";
+    }, 1000);
 }
 
 function showScore() {
@@ -253,7 +211,6 @@ function submitInitial() {
     };
     var stackedUserScores = [];
     stackedUserScores = JSON.parse(localStorage.getItem("savedScores")) || [];
-    console.log(stackedUserScores);
 
     if (user === "") {
         alert("Type your INITIAL correctly!");
@@ -303,11 +260,11 @@ function playAgain() {
     score = 0;
     questionIndex = 0;
 
-    moveOnButton.textContent = "Move On";
-    optionButton_A.disabled = false;
-    optionButton_B.disabled = false;
-    optionButton_C.disabled = false;
-    optionButton_D.disabled = false;
+    // moveOnButton.textContent = "Move On";
+    // optionButton_A.disabled = false;
+    // optionButton_B.disabled = false;
+    // optionButton_C.disabled = false;
+    // optionButton_D.disabled = false;
 }
 
 function clearScore() {
@@ -318,7 +275,6 @@ function clearScore() {
 
 // addEventListeners
 startButton.addEventListener("click", quizStart);
-moveOnButton.addEventListener("click", moveOn);
 submitInitialBtn.addEventListener("click", submitInitial);
 highScoreButton.addEventListener("click", gotoHighScorePage);
 playAgainBtn.addEventListener("click", playAgain);
