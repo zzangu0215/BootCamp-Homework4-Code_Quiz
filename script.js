@@ -246,6 +246,7 @@ function submitInitial() {
     highScorePageEl.style.display = "block";
 
     var user = initialInput.value.trim();
+    initialInput.value = '';
     var currentUserScores = {
         name: user.toUpperCase(),
         score: score,
