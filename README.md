@@ -14,7 +14,7 @@ Come take a well-made quiz here! [**Jun's Code Quiz**](https://zzangu0215.github
 
 3. Once you choose an answer, it will let you know whether your choice is correct or wrong. If you pick a wrong one, you lost **10 seconds** from timer! Ouch!
 
-    | ![Image Caption](images/correct.png) | ![Image Caption](images/wrong.PNG) | 
+    | ![Image Caption](images/correct.PNG) | ![Image Caption](images/wrong.PNG) | 
     |----|----|
 
 4. If the **TIME LEFT** is going to be **0**, it will let you know you ran out of the time, then if you press **OK**, it will directly let you go to the **Score Submission** page.
