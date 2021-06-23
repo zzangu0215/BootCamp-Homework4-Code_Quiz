@@ -20,7 +20,12 @@ body {
 }
 
 .quiz-over {
+    margin-top: 50px;
     text-align: center;
+}
+
+.quiz-over-text {
+    font-size: 2.0rem;
 }
 
 .high-score-page {

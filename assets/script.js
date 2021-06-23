@@ -28,7 +28,7 @@ var scoreInitialEl = document.querySelector(".score-initial");
 var highestScoreEl = document.querySelector(".highest-score");
 
 // Declare and Initialize variables
-var timerCount = 100;
+var timerCount = 80;
 var questionIndex = 0;
 var score = 0;
 var timerInterval;
@@ -126,7 +126,7 @@ function quizStart() {
     quizInProgressEl.style.display = "block";
     mainPageEl.style.display = "none";
     highScorePageEl.style.display = "none";
-    timerEl.textContent = 100;
+    timerEl.textContent = 80;
     answerCheckEl.textContent = '';
     displayQuestions();
     handleInterval();
@@ -259,7 +259,7 @@ function playAgain() {
     quizOverEl.style.display = "none";
     highScorePageEl.style.display = "none";
 
-    timerCount = 100;
+    timerCount = 80;
     score = 0;
     questionIndex = 0;
 
