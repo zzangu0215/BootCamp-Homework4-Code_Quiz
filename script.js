@@ -7,8 +7,6 @@ var optionButton_B = document.getElementById("optionB");
 var optionButton_C = document.getElementById("optionC");
 var optionButton_D = document.getElementById("optionD");
 
-var moveOnButton = document.getElementById("moveOn");
-
 var submitInitialBtn = document.getElementById("submit-initial");
 
 var playAgainBtn = document.getElementById("play-again");
@@ -18,27 +16,21 @@ var clearScoresBtn = document.getElementById("clear-scores");
 var initialInput = document.getElementById("initial");
 
 // Get APIs for the classes
-var gameTitleEl = document.querySelector(".game-title");
 var mainPageEl = document.querySelector(".main-page");
-var greetingEl = document.querySelector(".greeting");
-var mainStartBtnEl = document.querySelector(".main-start-button");
 var quizInProgressEl = document.querySelector(".quiz-in-progress");
 var timerEl = document.querySelector(".timer");
 var questionsEl = document.querySelector(".questions");
-var answerOptionsEl = document.querySelector(".answer-options");
 var answerCheckEl = document.querySelector(".answer-check");
 var quizOverEl = document.querySelector(".quiz-over");
 var finalScoreEl = document.querySelector(".final-score");
 var highScorePageEl = document.querySelector(".high-score-page");
-var showScoreEl = document.querySelector(".show-scores");
 var scoreInitialEl = document.querySelector(".score-initial");
-var scoreScoreEl = document.querySelector(".score-score");
+var highestScoreEl = document.querySelector(".highest-score");
 
 // Declare and Initialize variables
 var timerCount = 100;
 var questionIndex = 0;
 var score = 0;
-//var isChecked = false;
 var timerInterval;
 
 // Array of Quiz Question Object
@@ -224,19 +216,30 @@ function submitInitial() {
 
 function displayUserAndScores() {
     scoreInitialEl.textContent = "";
-    scoreScoreEl.textContent = "";
     var stackedUserScores = JSON.parse(localStorage.getItem("savedScores")) || [];
     var numOfUsers = stackedUserScores.length;
+    var space = ": ";
 
     for(var i=0; i<numOfUsers; i++) {
-        var nameStack = document.createElement("li");
-        var scoreStack = document.createElement("li");
+        var nameScoreStack = document.createElement("li");
 
-        nameStack.textContent = stackedUserScores[i].name;
-        scoreStack.textContent = stackedUserScores[i].score;
-        scoreInitialEl.appendChild(nameStack);
-        scoreScoreEl.appendChild(scoreStack);
+        nameScoreStack.textContent = stackedUserScores[i].name.concat(space, stackedUserScores[i].score);
+        scoreInitialEl.appendChild(nameScoreStack);
     }
+
+    var scoreArray = [];
+    for(var j=0; j<numOfUsers; j++) {
+        scoreArray.push(Object.values(stackedUserScores[j])[1]);
+    }
+
+    var maxScore = Math.max(...scoreArray);
+
+    for (var k=0; k<numOfUsers; k++) {
+        if (stackedUserScores[k].score === maxScore) {
+            highestScoreEl.textContent = stackedUserScores[k].name.concat(space, stackedUserScores[k].score);
+        }
+    }
+
 }
 
 function gotoHighScorePage() {
@@ -270,7 +273,7 @@ function playAgain() {
 function clearScore() {
     window.localStorage.clear();
     scoreInitialEl.textContent = "";
-    scoreScoreEl.textContent = "";
+    highestScoreEl.textContent = "";
 }
 
 // addEventListeners

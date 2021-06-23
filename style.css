@@ -1,19 +1,79 @@
-
-
-#optionA, #optionB, #optionC, #optionD  {
-    display: inline-block;
-    padding: 20px;
-    width: 200px;
-    height: 100px;
-    margin-top: 3px;
-    text-align: center;
-    font-family: sans-serif;
-    background-color: #5ef1ea;
-    border-radius: 10px;
-    border: 3px double #cccccc;
-    color: #131111;
-    font-size: 15px;
+body {
+    background-color: lightseagreen;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
 }
+
+.game-title {
+    font-size: 3.0rem;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.main-page {
+    margin-top: 70px;
+    text-align: center;
+}
+
+.quiz-in-progress {
+    text-align: center;
+}
+
+.quiz-over {
+    text-align: center;
+}
+
+.high-score-page {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.questions {
+    font-family: cursive;
+    font-size: 2.0rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.time-left {
+    text-align: right;
+    font-size: 1.5rem;
+    margin-top: 5px;
+    margin-right: 20px;
+    color:rgb(233, 229, 19);
+}
+
+.answer-check {
+    font-family: cursive;
+    margin-top: 10px;
+    font-size: 2.0rem;
+}
+
+#optionA, #optionB, #optionC, #optionD {
+	box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
+	background-color:#bddbfa;
+	border-radius:6px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	cursor:pointer;
+	color:#443636;
+	font-family:'Jazz LET', 'fantasy';
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+#optionA:hover, #optionB:hover, #optionC:hover, #optionD:hover {
+	background:linear-gradient(to bottom, #80b5ea 5%, #bddbfa 100%);
+	background-color:#80b5ea;
+}
+#optionA:active, #optionB:active, #optionC:active, #optionD:active {
+	position:relative;
+	top:1px;
+}
+
 
 footer {
     padding: 30px;
@@ -25,4 +85,34 @@ footer {
   
 footer h2 {
     font-size: 20px;
+}
+
+.score-initial {
+    counter-reset: li;
+    margin-top: 30px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.user-initial-score {
+    font-size: 3.0rem;
+}
+
+.score-initial li {
+    list-style-type: "*";
+    position: relative;
+    display: block;
+    margin-bottom: 15px;
+    color:rgb(233, 229, 19);
+    font-family: 'Marck Script', cursive;
+}
+
+.highest-score-text {
+    margin-top: 30px;
+}
+
+.highest-score {
+    font-family: 'Marck Script', cursive;
+    margin-bottom: 20px;
+    font-size: 2.0rem;
+    color: rgb(130, 19, 233);
 }
