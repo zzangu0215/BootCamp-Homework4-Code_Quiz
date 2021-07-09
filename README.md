@@ -1,6 +1,6 @@
 # Code Quiz Challenge
 If you want to test out your knowledge of **JavaScript**?  
-Come take a well-made quiz here! [**Jun's Code Quiz**](https://zzangu0215.github.io/BootCamp-Homework4-Code_Quiz/)
+Come take a well-made quiz here! [**Jun's Code Quiz**](https://zzangu0215.github.io/Code_Quiz_Challenge/)
 
 ## Features
 
